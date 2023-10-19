@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://cd1n516vmxh0e"]
+
+[ext_resource type="Script" path="res://Enemies/enemy.gd" id="1_ulf2u"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u5ati"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0dhl"]
+albedo_color = Color(0.580392, 0, 0.00784314, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o7o07"]
+material = SubResource("StandardMaterial3D_o0dhl")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_07hu5"]
+albedo_color = Color(0.0823529, 0.239216, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mh3p6"]
+material = SubResource("StandardMaterial3D_07hu5")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qn20c"]
+radius = 4.0
+
+[node name="Enemy" type="CharacterBody3D" groups=["Player"]]
+axis_lock_linear_z = true
+axis_lock_angular_z = true
+script = ExtResource("1_ulf2u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_u5ati")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_o7o07")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65319, -0.63444, 5.319)
+current = true
+
+[node name="DirectionPointer" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.513946, 0, 0, 0, 0.112484, 0, 0, 0, 0.123831, 0.53917, 0.399492, 0)
+mesh = SubResource("BoxMesh_mh3p6")
+
+[node name="SightRange" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SightRange"]
+shape = SubResource("SphereShape3D_qn20c")
+
+[connection signal="body_entered" from="SightRange" to="." method="_on_sight_range_body_entered"]
+[connection signal="body_exited" from="SightRange" to="." method="_on_sight_range_body_exited"]

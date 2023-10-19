@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ban0gnmsrdkee"]
+
+[ext_resource type="PackedScene" uid="uid://jui7dowljyqs" path="res://Player/player.tscn" id="1_bd5k3"]
+[ext_resource type="PackedScene" uid="uid://cd1n516vmxh0e" path="res://Enemies/enemy.tscn" id="2_j24t4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2si82"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_dde7x"]
+sky_material = SubResource("ProceduralSkyMaterial_2si82")
+
+[sub_resource type="Environment" id="Environment_d30mr"]
+background_mode = 2
+sky = SubResource("Sky_dde7x")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsu04"]
+albedo_color = Color(0.2, 0.262745, 0.113725, 1)
+
+[node name="JungleLevel" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_d30mr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_bd5k3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.67318, 1.64872, 0)
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="Ground" type="CSGBox3D" parent="Terrain" groups=["Ground"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.520647, -0.003)
+use_collision = true
+size = Vector3(11.6977, 0.923588, 1)
+material = SubResource("StandardMaterial3D_wsu04")
+
+[node name="Ground2" type="CSGBox3D" parent="Terrain" groups=["Ground"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1748, -2.33773, -0.003)
+use_collision = true
+size = Vector3(11.6977, 0.923588, 1)
+material = SubResource("StandardMaterial3D_wsu04")
+
+[node name="Enemy" parent="." instance=ExtResource("2_j24t4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.67318, 1.64872, 0)
